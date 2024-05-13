@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import React from "react";
 
 const Header = () => {
@@ -32,7 +33,9 @@ const Header = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            pananasik
+            <Link href="https://github.com/PAnanasik" target="_blank">
+              pananasik
+            </Link>
           </motion.li>
           <motion.li
             className="p-3 text-md font-medium"
@@ -40,7 +43,9 @@ const Header = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            lyakakoy
+            <Link href="https://github.com/lyakakoy" target="_blank">
+              lyakakoy
+            </Link>
           </motion.li>
         </ul>
       </nav>

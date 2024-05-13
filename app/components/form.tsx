@@ -153,7 +153,11 @@ const FormMain = () => {
               <FormItem>
                 <FormLabel>Ключ</FormLabel>
                 <FormControl>
-                  <Input placeholder="Lorem Ipsum" {...field} required />
+                  <Input
+                    placeholder="Например, 5176F67A0DF673B4"
+                    {...field}
+                    required
+                  />
                 </FormControl>
                 <FormDescription>
                   Текст ниже будет зашифрован/дешифрован с помощью этого ключа
@@ -171,7 +175,11 @@ const FormMain = () => {
                 <FormItem>
                   <FormLabel>Ключ 2</FormLabel>
                   <FormControl>
-                    <Input placeholder="Lorem Ipsum" {...field} required />
+                    <Input
+                      placeholder="Еще, например, 4176F67A0DF673B4"
+                      {...field}
+                      required
+                    />
                   </FormControl>
                   <FormDescription>И этого ключа</FormDescription>
                   <FormMessage />
@@ -188,7 +196,11 @@ const FormMain = () => {
                 <FormItem>
                   <FormLabel>Ключ 3</FormLabel>
                   <FormControl>
-                    <Input placeholder="Lorem Ipsum" {...field} required />
+                    <Input
+                      placeholder="И еще, например, 3176F67A0DF673B4"
+                      {...field}
+                      required
+                    />
                   </FormControl>
                   <FormDescription>И еще этого ключа</FormDescription>
                   <FormMessage />
@@ -203,7 +215,11 @@ const FormMain = () => {
               <FormItem>
                 <FormLabel>Текст</FormLabel>
                 <FormControl>
-                  <Textarea placeholder="Lorem Ipsum" {...field} required />
+                  <Textarea
+                    placeholder="1011001110110011011100101011101100000001011001101000111101100101"
+                    {...field}
+                    required
+                  />
                 </FormControl>
                 <FormDescription>
                   Именно этот текст будет зашифрован/дешифрован выбранным вами
