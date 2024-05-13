@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Montserrat, Raleway } from "next/font/google";
 import "./globals.css";
+import Header from "./components/header";
+import { Toaster } from "@/components/ui/sonner";
+import FormDataProvider from "./context/formdata";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Raleway({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} relative bg-background text-foreground`}>
+        <Header />
+        <FormDataProvider>{children}</FormDataProvider>
+        <Toaster />
+      </body>
     </html>
   );
 }
