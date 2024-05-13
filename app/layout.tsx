@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./components/header";
 import { Toaster } from "@/components/ui/sonner";
 import FormDataProvider from "./context/formdata";
+import ModeProvider from "./context/mode";
 
 const inter = Raleway({ subsets: ["latin"] });
 
@@ -23,9 +24,11 @@ export default function RootLayout({
       <body
         className={`${inter.className} relative bg-background text-foreground`}
       >
-        <Header />
-        <FormDataProvider>{children}</FormDataProvider>
-        <Toaster />
+        <ModeProvider>
+          <Header />
+          <FormDataProvider>{children}</FormDataProvider>
+          <Toaster />
+        </ModeProvider>
       </body>
     </html>
   );
