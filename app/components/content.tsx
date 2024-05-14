@@ -5,6 +5,20 @@ import { motion } from "framer-motion";
 import { useModeContext } from "../context/mode";
 import { cn } from "@/lib/utils";
 
+type FormData = {
+  data_being: string;
+  after_initial_permutation: string;
+  info_rounds: {
+    [key: string]: {
+      round: number;
+      lefthalf: string;
+      righthalf: string;
+      subkey: string;
+    };
+  };
+  result: string;
+};
+
 const ContentBlock = () => {
   const { formData } = useFormContext();
   const { mode } = useModeContext();
@@ -18,44 +32,89 @@ const ContentBlock = () => {
     };
   } = formData && formData.info_rounds;
 
+  console.log(formData);
+
   return (
     <motion.div
       className="relative flex items-center justify-center h-full w-full"
       initial={{ opacity: 0, x: 100 }}
       animate={{ opacity: 1, x: 0 }}
     >
-      <div className="h-screen flex pt-28 w-full bg-[#151515] justify-center overflow-y-auto">
-        {formData && mode && (
+      <div className="h-screen flex pt-28 w-full bg-[#151515] justify-center overflow-y-auto min-w-[450px]">
+        {formData && infoRounds && mode && (
           <div className="w-full pl-4">
-            <BrowserOnlyReactJson />
+            <BrowserOnlyReactJson data={formData} />
           </div>
         )}
-        {formData && !mode && (
-          <div className="w-full px-4 flex flex-col gap-4 h-full group">
-            {Object.values(infoRounds).map((roundInfo, index) => (
-              <div
-                key={index}
-                className={cn(
-                  `w-1/2 bg-input/40 p-4 rounded-md border border-input`,
-                  (index & 1) === 0 ? "self-start text-left" : "self-end"
-                )}
-              >
-                <h3 className="text-md font-bold tracking-wider text-primary mb-2">
-                  Round {roundInfo.round}
-                </h3>
-                <p className="text-sm font-mono">
-                  Left Half: {roundInfo.lefthalf}
-                </p>
-                <p className="text-sm font-mono">
-                  Right Half: {roundInfo.righthalf}
-                </p>
-                <p className="text-sm font-mono">Subkey: {roundInfo.subkey}</p>
-              </div>
-            ))}
+        {formData && infoRounds && !mode && (
+          <div className="w-full px-8 flex flex-col space-y-2 items-center">
+            <h2 className="text-lg font-medium">Dataset 0</h2>
+            <div className="flex flex-wrap gap-2 justify-center">
+              {infoRounds
+                ? Object.values(infoRounds).map((roundInfo, index) => (
+                    <div
+                      key={index}
+                      className={cn(
+                        `w-max bg-input/40 p-4 rounded-md border border-input`
+                      )}
+                    >
+                      <h3 className="text-md font-bold tracking-wider text-primary mb-2">
+                        Round {roundInfo.round}
+                      </h3>
+                      <p className="text-sm font-mono">
+                        Left Half: {roundInfo.lefthalf}
+                      </p>
+                      <p className="text-sm font-mono">
+                        Right Half: {roundInfo.righthalf}
+                      </p>
+                      <p className="text-sm font-mono">
+                        Subkey: {roundInfo.subkey}
+                      </p>
+                    </div>
+                  ))
+                : formData.map((data: FormData, dataIndex: number) => (
+                    <div
+                      key={dataIndex}
+                      className="w-full px-8 flex flex-col space-y-2 items-center"
+                    >
+                      <h2 className="text-lg font-medium">
+                        Dataset {dataIndex}
+                      </h2>
+                      <div className="w-full h-full flex flex-wrap gap-2 items-center justify-center">
+                        {Object.values(data.info_rounds).map(
+                          (roundInfo, roundIndex) => (
+                            <div
+                              key={roundIndex}
+                              className={cn(
+                                `w-max bg-input/40 p-4 rounded-md border border-input`
+                              )}
+                            >
+                              <h3 className="text-md font-bold tracking-wider text-primary mb-2">
+                                Round {roundInfo.round}
+                              </h3>
+                              <p className="text-sm font-mono">
+                                Left Half: {roundInfo.lefthalf}{" "}
+                                {typeof roundInfo.lefthalf}
+                              </p>
+                              <p className="text-sm font-mono">
+                                Right Half: {roundInfo.righthalf}{" "}
+                                {typeof roundInfo.righthalf}
+                              </p>
+                              <p className="text-sm font-mono">
+                                Subkey: {roundInfo.subkey}{" "}
+                                {typeof roundInfo.subkey}
+                              </p>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    </div>
+                  ))}
+            </div>
           </div>
         )}
 
-        {!formData && (
+        {formData && formData.errors && (
           <div className="h-full w-full flex justify-center items-center flex-col p-4 text-center">
             <h2 className="font-bold text-md">Немного пустовато...</h2>
             <p className="text-sm text-muted-foreground">
@@ -69,13 +128,12 @@ const ContentBlock = () => {
   );
 };
 
-export const BrowserOnlyReactJson = () => {
-  const { formData } = useFormContext();
+export const BrowserOnlyReactJson = (data: any) => {
   if (typeof window === "undefined") {
     return null;
   }
   const ReactJson = require("react-json-view").default;
-  return <ReactJson src={formData} theme="summerfruit" collapsed={false} />;
+  return <ReactJson src={data} theme="summerfruit" collapsed={false} />;
 };
 
 export default ContentBlock;

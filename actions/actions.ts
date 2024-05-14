@@ -4,27 +4,41 @@ import axios from "axios";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
-export const encryptTextDES = async (
-  formData: FormData,
-  choice: string,
-  algorithm: string
-) => {
+export const encryptTextDES = async (prevState: any, formData: FormData) => {
+  console.log(formData);
+
   const schema = z
     .object({
-      block: z.string({
-        invalid_type_error: "Поле текста не заполнено",
-      }),
-      key: z.string({
-        invalid_type_error: "Поле ключа не заполнено",
-      }),
+      block: z
+        .string({
+          invalid_type_error: "Поле текста не заполнено",
+        })
+        .min(1, { message: "Поле текста не заполнено" }),
+      key: z
+        .string({
+          invalid_type_error: "Поле ключа не заполнено",
+        })
+        .min(1, { message: "Поле ключа не заполнено" }),
       key2: z.string().nullable(),
       key3: z.string().nullable(),
+      algorithm: z
+        .string({
+          invalid_type_error: "Алгоритм не выбран",
+        })
+        .min(1, { message: "Алгоритм не выбран" }),
+      choice: z
+        .string({
+          invalid_type_error: "Метод не выбран",
+        })
+        .min(1, { message: "Метод не выбран" }),
     })
+
     .refine(
       (data) => {
         if (
           (data.key2 === null || data.key3 === null) &&
-          (algorithm === "TRIPLE-DES-EEE" || algorithm === "TRIPLE-DES-EDE")
+          (data.algorithm === "TRIPLE-DES-EEE" ||
+            data.algorithm === "TRIPLE-DES-EDE")
         ) {
           return false;
         }
@@ -41,6 +55,8 @@ export const encryptTextDES = async (
     key: formData.get("key"),
     key2: formData.get("key2"),
     key3: formData.get("key3"),
+    algorithm: formData.get("algorithm"),
+    choice: formData.get("choice"),
   });
 
   if (!parse.success) {
@@ -50,11 +66,11 @@ export const encryptTextDES = async (
     };
   }
 
-  if (!algorithm || !choice) {
-    return { error: "Не все поля заполнены" };
-  }
+  const { block, key, key2, key3, algorithm, choice } = parse.data;
 
-  const { block, key, key2, key3 } = parse.data;
+  if (!algorithm || !choice) {
+    return { message: "Не все поля заполнены" };
+  }
 
   try {
     let url = "";
@@ -71,7 +87,7 @@ export const encryptTextDES = async (
     } else if (algorithm === "TRIPLE-DES-EDE" && choice === "Дешифрация") {
       url = "http://localhost:8000/api/triple_des_ede/decrypt";
     } else {
-      return { error: "Неправильный выбор алгоритма или метода" };
+      return { message: "Неправильный выбор алгоритма или метода" };
     }
 
     let postData = {};
@@ -99,6 +115,6 @@ export const encryptTextDES = async (
 
     return response.data;
   } catch (error) {
-    return { error: "Что-то пошло не так" };
+    return { message: "Что-то пошло не так" };
   }
 };
