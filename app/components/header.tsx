@@ -19,8 +19,8 @@ const Header = () => {
   return (
     <header className="z-[999] relative">
       <motion.div
-        className="fixed top-0 left-1/2 h-[4.5rem] w-full bg-background rounded-none border border-white border-opacity-[0.1]
-        backdrop-blur-[0.5rem] xs:top-6 xs:h-[3.25rem] xs:w-[28rem] xs:rounded-full -translate-x-1/2"
+        className="fixed top-0 left-1/2 h-[5rem] w-full bg-background rounded-none border border-white border-opacity-[0.1]
+        backdrop-blur-[0.5rem] xs:top-6 xs:h-[3.25rem] xs:w-[25rem] xs:rounded-full -translate-x-1/2"
         initial={{ y: -100, x: "-50%", opacity: 0 }}
         animate={{ y: 0, x: "-50%", opacity: 1 }}
         transition={{ duration: 1 }}
@@ -31,7 +31,7 @@ const Header = () => {
         h-3/4"
         >
           <motion.li
-            className="xs:p-3 p-2 text-md font-mono font-medium text-primary"
+            className="xs:p-3 p-1 text-md font-mono font-medium text-primary"
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1 }}
@@ -39,7 +39,7 @@ const Header = () => {
             encrypt project
           </motion.li>
           <motion.li
-            className="xs:p-3 p-2 text-md font-medium"
+            className="xs:p-3 p-1 text-md font-medium"
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1 }}
@@ -49,7 +49,7 @@ const Header = () => {
             </Link>
           </motion.li>
           <motion.li
-            className="xs:p-3 p-2 text-md font-medium"
+            className="xs:p-3 p-1 text-md font-medium"
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1 }}

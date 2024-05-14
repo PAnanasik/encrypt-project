@@ -6,6 +6,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { SkeletonCard } from "./components/skeleton";
 
 export default function Home() {
   return (
@@ -16,7 +17,7 @@ export default function Home() {
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel className="w-full" defaultSize={40} minSize={1}>
-          <Suspense fallback={<p>Loading...</p>}>
+          <Suspense fallback={<SkeletonCard />}>
             <ContentBlock />
           </Suspense>
         </ResizablePanel>
