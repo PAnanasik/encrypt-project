@@ -4,6 +4,7 @@ import { Circle, Lock, Unlock } from "lucide-react";
 import { useFormState } from "react-hook-form";
 import { useFormStatus } from "react-dom";
 import { cn } from "@/lib/utils";
+import { useModeContext } from "@/app/context/mode";
 
 const CYCLES_PER_LETTER = 2;
 const SHUFFLE_TIME = 50;
@@ -11,9 +12,10 @@ const SHUFFLE_TIME = 50;
 const CHARS = "!@#$%^&*():{};|,.<>/?";
 const TARGET_TEXT = "отправить";
 
-const EncryptButton = () => {
+const EncryptButton = ({ value }: { value: string }) => {
   const { pending } = useFormStatus();
   const intervalRef = useRef(null);
+  const { setAlgorithmData } = useModeContext();
 
   const [text, setText] = useState(TARGET_TEXT);
 
@@ -59,6 +61,7 @@ const EncryptButton = () => {
       }}
       onMouseEnter={scramble}
       onMouseLeave={stopScramble}
+      onClick={() => setAlgorithmData(value)}
       className={cn(
         `group relative overflow-hidden rounded-md bg-primary px-4 py-2 
       font-mono font-medium uppercase text-white transition-colors flex items-center justify-center gap-x-2`,

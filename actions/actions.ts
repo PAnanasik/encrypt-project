@@ -9,7 +9,7 @@ export const encryptTextDES = async (prevState: any, formData: FormData) => {
 
   const schema = z
     .object({
-      block: z
+      text: z
         .string({
           invalid_type_error: "Поле текста не заполнено",
         })
@@ -51,7 +51,7 @@ export const encryptTextDES = async (prevState: any, formData: FormData) => {
     );
 
   const parse = schema.safeParse({
-    block: formData.get("block"),
+    text: formData.get("text"),
     key: formData.get("key"),
     key2: formData.get("key2"),
     key3: formData.get("key3"),
@@ -66,7 +66,7 @@ export const encryptTextDES = async (prevState: any, formData: FormData) => {
     };
   }
 
-  const { block, key, key2, key3, algorithm, choice } = parse.data;
+  const { text, key, key2, key3, algorithm, choice } = parse.data;
 
   if (!algorithm || !choice) {
     return { message: "Не все поля заполнены" };
@@ -94,19 +94,19 @@ export const encryptTextDES = async (prevState: any, formData: FormData) => {
 
     if (algorithm === "DES") {
       postData = {
-        block: block,
+        text: text,
         key: key,
-      } as { block: string; key: string };
+      } as { text: string; key: string };
     } else if (
       algorithm === "TRIPLE-DES-EEE" ||
       algorithm === "TRIPLE-DES-EDE"
     ) {
       postData = {
-        block: block,
+        text: text,
         key1: key,
         key2: key2,
         key3: key3,
-      } as { block: string; key1: string; key2: string; key3: string };
+      } as { text: string; key1: string; key2: string; key3: string };
     }
 
     const response = await axios.post(url, postData);

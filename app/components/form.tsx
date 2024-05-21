@@ -19,13 +19,15 @@ import Label from "./label";
 import Description from "./description";
 import { FormItem } from "./formitem";
 import { useFormState } from "react-dom";
+import { useModeContext } from "../context/mode";
 
 const initialState = { message: null, errors: {} };
 
 const FormMain = () => {
   const [formState, formAction] = useFormState(encryptTextDES, initialState);
-
   const { setFormData } = useFormContext();
+  const { setAlgorithmData } = useModeContext();
+
   const [algorithm, setAlgorithm] = useState("");
 
   useEffect(() => {
@@ -142,11 +144,11 @@ const FormMain = () => {
         )}
 
         <FormItem>
-          <Label htmlFor="block">Текст</Label>
+          <Label htmlFor="text">Текст</Label>
           <Textarea
-            name="block"
+            name="text"
             placeholder="1011001110110011011100101011101100000001011001101000111101100101"
-            aria-describedby="block-error"
+            aria-describedby="text-error"
             defaultValue=""
           />
           <Description>
@@ -155,16 +157,16 @@ const FormMain = () => {
           </Description>
         </FormItem>
 
-        <div id="block-error" aria-live="polite" aria-atomic="true">
-          {formState.errors?.block &&
-            formState.errors.block.map((error: string) => (
+        <div id="text-error" aria-live="polite" aria-atomic="true">
+          {formState.errors?.text &&
+            formState.errors.text.map((error: string) => (
               <p className="mt-2 text-sm text-red-500" key={error}>
                 {error}
               </p>
             ))}
         </div>
 
-        <EncryptButton />
+        <EncryptButton value={algorithm} />
       </form>
     </motion.div>
   );
