@@ -37,7 +37,7 @@ type DataCarouselProps = {
 const DataCarousel = ({ data }: DataCarouselProps) => {
   return (
     <Carousel
-      className="w-full max-w-3xl mx-auto sm:p-0 p-2 flex items-center justify-center h-full"
+      className="w-full max-w-3xl mx-auto flex items-center justify-center h-full"
       orientation="horizontal"
     >
       <CarouselContent>

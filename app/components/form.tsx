@@ -19,14 +19,12 @@ import Label from "./label";
 import Description from "./description";
 import { FormItem } from "./formitem";
 import { useFormState } from "react-dom";
-import { useModeContext } from "../context/mode";
 
 const initialState = { message: null, errors: {} };
 
 const FormMain = () => {
   const [formState, formAction] = useFormState(encryptTextDES, initialState);
   const { setFormData } = useFormContext();
-  const { setAlgorithmData } = useModeContext();
 
   const [algorithm, setAlgorithm] = useState("");
 
@@ -147,7 +145,7 @@ const FormMain = () => {
           <Label htmlFor="text">Текст</Label>
           <Textarea
             name="text"
-            placeholder="1011001110110011011100101011101100000001011001101000111101100101"
+            placeholder="Hi, my friend"
             aria-describedby="text-error"
             defaultValue=""
           />
