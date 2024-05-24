@@ -10,7 +10,6 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import PopoverCard from "./popover-card";
-import DataCarousel from "./data-carousel";
 
 interface RoundInfo {
   round: number;
@@ -36,6 +35,8 @@ type DataCarouselProps = {
 };
 
 const BigDataCarousel = ({ data }: DataCarouselProps) => {
+  console.log(data);
+
   return (
     <Carousel
       className="w-full max-w-3xl mx-auto flex items-center justify-center h-full"
@@ -43,6 +44,8 @@ const BigDataCarousel = ({ data }: DataCarouselProps) => {
     >
       <CarouselContent>
         {data &&
+          data[0] &&
+          data[0].binary_text &&
           data.map((item, index) => (
             <CarouselItem key={index}>
               <Card>
